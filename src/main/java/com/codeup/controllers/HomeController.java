@@ -6,9 +6,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 class HomeController {
+    // Controller Exercise - Version 1
+//    @GetMapping("/")
+//    @ResponseBody
+//    public String home(){
+//        return "This is the landing page!";
+//    }
+
     @GetMapping("/")
-    @ResponseBody
-    public String home(){
-        return "This is the landing page!";
+    public String welcome(){
+        return "home";
     }
+
 }
