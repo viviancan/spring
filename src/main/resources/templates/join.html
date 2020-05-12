@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8" />
-	<title>Join</title>
-<!--	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css} "/>-->
-	<link rel="stylesheet" href="webjars/bootstrap/4.4.1-1/css/bootstrap.min.css">
+<head th:replace="fragments/head :: main-head"></head>
 
-</head>
 <body>
+
+<nav th:replace="fragments/navbar :: main-nav"></nav>
+
 
 <h1 th:text="${cohort}"></h1>
 
@@ -16,10 +14,8 @@
 	<button>Join now</button>
 </form>
 
+	<div th:replace="fragments/scripts :: assets"></div>
 
-	<script src="webjars/bootstrap/4.4.1-1/js/bootstrap.min.js"></script>
-	<script src="webjars/jquery/3.4.0/jquery.js"></script>
-	<script src="webjars/popper.js/1.14.3/popper.js"></script>
 
 </body>
 </html>

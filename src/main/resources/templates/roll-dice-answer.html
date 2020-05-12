@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: main-head"></head>
+
+<body>
+	<nav th:replace="fragments/navbar :: main-nav"></nav>
+
+	<div class="container">
+		<h1>Your Number: <span th:text="${userNum}"></span></h1>
+		<h1>Random Number: <span th:text="${randomNum}"></span></h1>
+		<h1> <span th:text="${isEqual} ? 'Yay you win!' : 'Sorry, try again!'"></span></h1>
+	</div>
+
+	<div th:replace="fragments/scripts :: assets"></div>
+
+</body>
+</html>
