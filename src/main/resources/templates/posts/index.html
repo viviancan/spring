@@ -6,12 +6,15 @@
 <nav th:replace="fragments/navbar :: main-nav"></nav>
 
 	<div class="container">
-		<h1>This page will show the posts</h1>
+		<h1>Posts</h1>
 
 		<div th:each="post : ${posts}">
 			<hr>
+
+			<p th:text="${post.id}" />
 			<p th:text="${post.title}" />
 			<p th:text="${post.body}" />
+			<a class="btn btn-primary" th:href="@{/posts/{id}(id=${post.id})}" role="button">View More</a>
 
 		</div>
 	</div>

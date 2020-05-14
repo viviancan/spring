@@ -1,50 +1,35 @@
 package com.codeup.controllers;
 
 import com.codeup.models.Post;
+import com.codeup.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
-//        GET	/posts	posts index page
-//        GET	/posts/{id}	view an individual post
-//        GET	/posts/create	view the form for creating a post
-//        POST	/posts/create	create a new post
 
 @Controller
 public class PostController {
-//    @RequestMapping(path = "/posts", method = RequestMethod.GET)
+    private final PostRepository postRepo;
 
-// Version One
-//    @GetMapping("/posts")
-//    @ResponseBody
-//    public String index(){
-//        return "Index page for posts";
-//    }
+    public PostController(PostRepository postRepo) {
+        this.postRepo = postRepo;
+    }
 
-//    @GetMapping("/posts/{id}")
-//    @ResponseBody
-//    public String post(@PathVariable long id){
-//        return "Page for Post: " + id;
-//    }
-//
+    @GetMapping("/")
+    public String fallback(){
+        return "redirect:/posts";
+    }
 
-
-//Version Two - Views lesson
     @GetMapping("/posts")
     public String index(Model model){
-        ArrayList<Post> postList = new ArrayList<>();
 
-//        postList.add(new Post("Day 1", "This is the body of a post for day 1!"));
-//        postList.add(new Post("Day 2", "This is the body of a post for day 2!"));
-//        postList.add(new Post("Day 3", "This is the body of a post for day 3!"));
-
-        for (int i = 1; i <= 5; i++) {
-            String fTitle = "Day " + i;
-            String fBody = "This is the body of a post for day " + i;
-            postList.add(new Post( fTitle, fBody));
-        }
+        List<Post> postList = postRepo.findAll();
 
         model.addAttribute("posts", postList);
 
@@ -53,20 +38,45 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String post(@PathVariable long id, Model model){
-        Post newPost = new Post("Example Post", "This is the body of a post!");
-        model.addAttribute("post", newPost);
+        model.addAttribute("post", postRepo.getOne(id));
         return "posts/show";
     }
 
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model){
+        model.addAttribute("post", postRepo.getOne(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model, @RequestParam String title, @RequestParam String body){
+
+        Post oldPost = postRepo.getOne(id);
+        oldPost.setTitle(title);
+        oldPost.setBody(body);
+        postRepo.save(oldPost);
+
+        return "redirect:/posts/" + id;
+    }
+
+    @PostMapping("/posts/{id}/delete")
+    public String delete(@PathVariable long id) {
+        postRepo.deleteById(id);
+        return "redirect:/posts";
+    }
+
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String postCreateForm(){
-        return "Viewing the form to create a post";
+    public String showCreatePostForm(Model model){
+        System.out.println("posts/create method");
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createNewPost(){
-        return "Creating a new post";
+    public String createNewPost(@ModelAttribute Post newPost) {
+        Post savedPost = postRepo.save(newPost);
+        System.out.println(savedPost.getId());
+
+        return "redirect:/posts/" + savedPost.getId();
     }
 }

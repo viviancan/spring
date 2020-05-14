@@ -13,9 +13,9 @@ class HomeController {
 //        return "This is the landing page!";
 //    }
 
-    @GetMapping("/")
-    public String welcome(){
-        return "home";
-    }
+//    @GetMapping("/")
+//    public String welcome(){
+//        return "home";
+//    }
 
 }

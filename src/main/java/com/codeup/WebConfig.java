@@ -1,13 +1,14 @@
 package com.codeup;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+        import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+        import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+        import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 //https://www.baeldung.com/maven-webjars
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
@@ -17,3 +18,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("/webjars/");
     }
 }
+
